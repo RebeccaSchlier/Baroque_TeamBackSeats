@@ -76,6 +76,8 @@ public class FirstPersonController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
+    private float yRotation = 0f;
+
     void HandleLook()
     {
         float mouseX = inputLook.x * mouseSensitivity;
@@ -83,10 +85,11 @@ public class FirstPersonController : MonoBehaviour
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        yRotation += mouseX;
 
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+        transform.localRotation = Quaternion.Euler(xRotation, transform.localEulerAngles.y + mouseX, 0f);
     }
+
 
     void Jump()
     {
